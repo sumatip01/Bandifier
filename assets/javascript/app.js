@@ -1,6 +1,6 @@
 $('#searchbutton').click(function () {
     $.ajax({
-        url: 'http://en.wikipedia.org/w/api.php',
+        url: 'https://en.wikipedia.org/w/api.php',
         data: {
             action: 'query',
             
