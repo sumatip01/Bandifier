@@ -1,0 +1,30 @@
+body {
+    background-image: url("../images/bandLove.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card-content {
+    margin-top: 40px;
+}
+ 
+#btnMain {
+    margin-top: 30px;
+}
+
+.logo {
+font-family: 'Work Sans',
+sans-serif;
+font-family: 'Indie Flower',
+cursive;
+font-size: 40px;
+}
+
+.descript {
+   font-size: 20px;
+}
+
+.pink-icon {
+    color: #ee6e73;
+    font-weight: 900;
+}
