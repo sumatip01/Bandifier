@@ -1,10 +1,11 @@
-
+var albumID;
 var trackID;
 var track;
+var artistName;
 var APIkey="003b119f7901034749c7fd78d8ea9bfc";
 
-$("button").on("click",function(){
-    track=$("input").val();
+$(".track-submit").on("click",function(){
+    track=$(".lyric-input").val();
     //must replace space with %20 for query
     track=track.replace(/ /g,"%20");
     console.log(track);
@@ -30,16 +31,44 @@ $("button").on("click",function(){
         }).then(function(response){
             var str=response.message.body.lyrics.lyrics_body;
             str=str.substring(0,str.length-"******* This Lyrics is NOT for Commercial use ******* (1409617737497)".length)
-            $("<p>").text(str).prependTo(".result");
+            $("<p>").text(str).prependTo(".lyric-result");
             
         })
     
     });
-    $("input").text("");
+    $("lyric-input").text("");
 
 
 
 })
+//get tracks
+//http://api.musixmatch.com/ws/1.1/track.search?q_artist=justin bieber&page_size=3&page=1&s_track_rating=desc
+$(".artist-submit").on("click",function(){
+    artist=$(".artist-input").val();
+    //must replace space with %20 for query
+    artist=artist.replace(/ /g,"%20");
 
+    var queryUrl="https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&q_artist="+artist+"&apikey=003b119f7901034749c7fd78d8ea9bfc";
+    $.ajax({
+        url:queryUrl,
+        dataType:"jsonp",
+        method:"GET",
+        
+    })
+    .then(function(response){
+        var arr=response.message.body.track_list
+        for(i=0;i<arr.length;i++){
+            console.log(arr[i].track.track_name);
+        }
+    })
 
+})
 
+/* 
+<select name="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="fiat">Fiat</option>
+  <option value="audi">Audi</option>
+</select>
+*/
