@@ -6,7 +6,7 @@ var clientId = 'fe8362d03fae494c914dbed629a6f9f8';
 // var encodedData = window.btoa(clientId + ':' + clientSecret);
 // var authorizationHeaderString = 'Authorization: Basic ' + encodedData;
 
-
+var localToken;
 
 
 
@@ -41,7 +41,7 @@ window.location.hash = '';
 
 // Set token
 let _token = hash.access_token;
-
+localToken=_token;
 const authEndpoint = 'https://accounts.spotify.com/authorize';
 
 // Replace with your app's client ID, redirect URI and desired scopes
@@ -54,6 +54,7 @@ const scopes = [
 // If there is no token, redirect to Spotify authorization
 if (!_token) {
   window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token`;
+  localToken=_token;
 }
 
 $.ajax({
@@ -117,7 +118,21 @@ $('#searchbutton').click(function () {
         console.log(resp);
     });
     
-    console.log("button clicked")
+
+    $.ajax({
+        url: "https://api.spotify.com/v1/search?q=" + searchTerm + "&type=artist&limit=1",
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + localToken );},
+        success: function(data) { 
+          // Do something with the returned data
+          console.log(data)
+          data.items.map(function(artist) {
+            let item = $('<li>' + artist.name + '</li>');
+            item.appendTo($('#top-artists'));
+          });
+        }
+     });
+
     $.ajax({
         url: 'https://en.wikipedia.org/w/api.php',
         data: {
