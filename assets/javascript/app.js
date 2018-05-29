@@ -2,9 +2,9 @@
 // spotifyAPI.setAccessToken('')
 
 var clientId = 'fe8362d03fae494c914dbed629a6f9f8';
-var clientSecret = 'b3e9bee2e7df4d8f832ff04dc8e2cfa0';
-var encodedData = window.btoa(clientId + ':' + clientSecret);
-var authorizationHeaderString = 'Authorization: Basic ' + encodedData;
+// var clientSecret = 'b3e9bee2e7df4d8f832ff04dc8e2cfa0';
+// var encodedData = window.btoa(clientId + ':' + clientSecret);
+// var authorizationHeaderString = 'Authorization: Basic ' + encodedData;
 
 
 
@@ -62,6 +62,7 @@ $.ajax({
     beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + _token );},
     success: function(data) { 
       // Do something with the returned data
+      console.log(data)
       data.items.map(function(artist) {
         let item = $('<li>' + artist.name + '</li>');
         item.appendTo($('#top-artists'));
