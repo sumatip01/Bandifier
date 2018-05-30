@@ -59,6 +59,56 @@ function getAuthorization() {
         }
     });
 }
+$("#spotifybutton").click(function() {
+
+    searchTerm = $("#spotify-input").val()
+    sessionStorage.setItem("searchedTerm", searchTerm)
+        const hash = window.location.hash
+            .substring(1)
+            .split('&')
+            .reduce(function (initial, item) {
+                if (item) {
+                    var parts = item.split('=');
+                    initial[parts[0]] = decodeURIComponent(parts[1]);
+                }
+                return initial;
+            }, {});
+        window.location.hash = '';
+    
+        // Set token
+        let _token = hash.access_token;
+        localToken = _token;
+        const authEndpoint = 'https://accounts.spotify.com/authorize';
+    
+        // Replace with your app's client ID, redirect URI and desired scopes
+        const clientId = 'fe8362d03fae494c914dbed629a6f9f8';
+        const redirectUri = 'https://rudenik.github.io/Bandifier/';
+        const scopes = [
+            // 'user-top-read'
+        ];
+    
+        // If there is no token, redirect to Spotify authorization
+        if (!_token) {
+            window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token`;
+            localToken = _token;
+        }
+        $.ajax({
+            url: "https://api.spotify.com/v1/artists/"+searchTerm+"/top-tracks",
+            type: "GET",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + _token);
+            },
+            success: function (data) {
+                // Do something with the returned data
+                console.log(data)
+                // data.items.map(function (artist) {
+                //     let item = $('<li>' + artist.name + '</li>');
+                //     item.appendTo($('#top-artists'));
+                // });
+            }
+        });
+});
+
 
 $('#searchbutton').click(function () {
     var searchTerm = $("#search-input").val();
