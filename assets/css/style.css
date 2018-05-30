@@ -28,3 +28,21 @@ font-size: 40px;
     color: #ee6e73;
     font-weight: 900;
 }
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.page-footer { 
+    background-color: none;
+}
+
+.addMore {
+    margin: 30px;
+}
