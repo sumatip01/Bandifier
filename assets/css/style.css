@@ -7,21 +7,19 @@ body {
 .card-content {
     margin-top: 40px;
 }
- 
+
 #btnMain {
     margin-top: 30px;
 }
 
 .logo {
-font-family: 'Work Sans',
-sans-serif;
-font-family: 'Indie Flower',
-cursive;
-font-size: 40px;
+    font-family: 'Work Sans', sans-serif;
+    font-family: 'Indie Flower', cursive;
+    font-size: 40px;
 }
 
 .descript {
-   font-size: 20px;
+    font-size: 20px;
 }
 
 .pink-icon {
@@ -39,7 +37,7 @@ main {
     flex: 1 0 auto;
 }
 
-.page-footer { 
+.page-footer {
     background-color: none;
 }
 
