@@ -19,10 +19,23 @@
     <link rel="icon" type="image/png" href="assets/images/magnifying-favicon.png" sizes="16x16 32x32" />
 </head>
 <body>
-    <input class="form-control" id="search-input" type="text" placeholder="What band do you want to look up? ">
-    <button id="searchbutton" class="btn btn-primary" type="submit">Search</button>
+    <div class ="row">
+        <div class="col s6">
+    <div class="input-field" >
+    <input class="form-control" id="search-input" type="text" placeholder="What band do you want to look up? " style="background-color: white; width: 40%; margin: 20px">
+    <button id="searchbutton" class="btn waves-effect waves-light" name="action" type="submit">Search</button>
+    <div class ="row">
+            <div class="col s6">
+        <div class="input-field" >
+        <input class="form-control" id="spotify-input" type="text" placeholder="What band do you want to look up? " style="background-color: white; width: 40%; margin: 20px">
+        <button id="spotifybutton" class="btn waves-effect waves-light" name="action" type="submit">Search Spotify</button>
+</div>
+</div>
+</div>
+<div class="container">
     <div id="display-result"></div>
-    <div id="artistsections"></div>
+    <div id="artistsections" ></div>
     <div id="returnedtext"></div>
     <div id="top-artists"></div>
+</div>
 </body>
