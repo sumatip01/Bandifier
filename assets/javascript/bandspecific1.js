@@ -18,11 +18,11 @@ function searchItUp (){
         data: {
             action: 'query',
             list: 'search',
-            srsearch: $("#search-input").val(),
+            srsearch: searchTerm,
             format: 'json',
             generator: 'search',
             //parameters for generator
-            gsrsearch: $("#search-input").val(),
+            gsrsearch: searchTerm,
             gsrnamespace: 0,
             gsrlimit: 10,
             origin: "*",
@@ -51,8 +51,8 @@ function searchItUp (){
 function processResult(apiResult) {    
     localPageID = apiResult.query.search[0].title;
     // grabSections(localPageID);
-    $('#band-bio').prepend('<img src='+apiResult.query.pages[apiResult.query.search[0].pageid].thumbnail.source+'>')
-    $('#band-bio').html('<p>' + apiResult.query.pages[apiResult.query.search[0].pageid].extract + '</p>');
-    $('#card-title').text(searchTerm);
+    $('.info-container').append('<img src='+apiResult.query.pages[apiResult.query.search[0].pageid].thumbnail.source+'>');
+    $('.info-container').html('<p>' + apiResult.query.pages[apiResult.query.search[0].pageid].extract + '</p>');
+    $('#bandinfocard').text(searchTerm);
     // $('#display-result').append('<p>' + apiResult.query.search[i].snippet + '</p>');
 }
