@@ -92,8 +92,9 @@ $("#spotifybutton").click(function() {
             window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token`;
             localToken = _token;
         }
+        searchTerm = encodeURI(searchTerm);
         $.ajax({
-            url: "https://api.spotify.com/v1/artists/"+searchTerm+"/top-tracks",
+            url: "https://api.spotify.com/v1/search?q="+searchTerm+"&type=artist",
             type: "GET",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + _token);
