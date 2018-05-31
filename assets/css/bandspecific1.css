@@ -1,20 +1,39 @@
 body {
     background-color: blueviolet;
 }
+#top-artists{
+    width: 100%;
+    padding: 50px;
+}
 .spotify-embed{
     background: #282828;
-    &:not(:last-of-type){
+    /* &:not(:last-of-type){
         margin-bottom: 5px;
-    }
-
-    iframe{
-        display: block;
-        transition: opacity 0.125s;
-        .js & {
-            opacity: 0;
-            &.loaded {
-                opacity: 1;
-            }
-        }
-    }
+ */
+    height: 80px;    
 }
+iframe{ 
+    width: 100%;
+    border-width: 0px;
+    animation-name: fadeIn;
+    animation-duration: 5s;
+}
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    25%{
+        opacity: .25;
+    }
+    49%{
+        opacity: .5;
+    }
+    75%{
+        opacity: .75;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+    /* } */
