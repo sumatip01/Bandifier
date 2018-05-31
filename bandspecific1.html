@@ -6,7 +6,7 @@
     <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
     <link type="text/css" rel="stylesheet" href="assets/css/bandspecific1.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js" defer></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
+    
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
@@ -62,6 +62,13 @@
             <div class="card-content white-text">
               <span class="card-title">Lyrics</span>
               <div class="lyrics-container">
+                <!-- Dropdown Trigger -->
+                <a class='dropdown-trigger btn' data-target='dropdown1'>Tracks List</a>
+                <!-- Dropdown Structure -->
+                <ul id='dropdown1' class='dropdown-content tracks-dropdown'>
+                </ul>
+                <div class="lyrics" style="margin-top:3vh;">
+                </div>
               </div>
             </div>
           </div>
@@ -72,6 +79,7 @@
             <div class="card-content white-text">
               <span class="card-title">Youtube Video</span>
               <div class="youtube-container">
+              
               </div>
             </div>
           </div>
@@ -92,6 +100,10 @@
     </main>
             
       <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="assets/javascript/bandspecific1.js" defer></script>
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+      <script src="./assets/javascript/bandspecific1.js"></script>
+    <script src="./testing/lyrics.js"></script>
 </body>
 </html>
