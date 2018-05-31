@@ -1,5 +1,5 @@
 
-var searchTerm = sessionStorage.getItem("SearchedTerm");
+var searchTerm = sessionStorage.getItem("searchedTerm");
 var localPageID;
 
 
@@ -10,6 +10,16 @@ if (!searchTerm){
 
 searchItUp();
 
+$("#btnMain").on("click", function (event){
+    event.preventDefault();
+    searchTerm = $("#search-input").val();
+    sessionStorage.setItem("searchedTerm", searchTerm);
+    $("#search-input").val("");
+    location.href='bandspecific1.html';
+    console.log(searchTerm);
+
+
+})
 
 function searchItUp (){
 
@@ -49,6 +59,7 @@ function searchItUp (){
 }
 
 function processResult(apiResult) {    
+    // console.log(apiResult);
     localPageID = apiResult.query.search[0].title;
     // grabSections(localPageID);
     $('.info-container').append('<img src='+apiResult.query.pages[apiResult.query.search[0].pageid].thumbnail.source+'>');

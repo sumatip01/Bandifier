@@ -3,11 +3,11 @@ $('.dropdown-trigger').dropdown();
 var setLyrics = {
     trackID: "",
     APIkey: "003b119f7901034749c7fd78d8ea9bfc",
-    artist: "the strokes",
+    artist: sessionStorage.getItem("searchedTerm"),//"the strokes",
     getArtist: function () {
         if(sessionStorage.getItem("searchedTerm")){
         setLyrics.artist = sessionStorage.getItem("searchedTerm");
-        setLyrics.artist = artist.replace(/ /g, "%20");
+        setLyrics.artist = setLyrics.artist.replace(/ /g, "%20");
         }
     },
     getTracks: function () {
@@ -34,7 +34,8 @@ var setLyrics = {
 
         $(".tracks-dropdown").on("click", "span", function () {
             var track = $(this).text();
-            track = track.replace(/ /g, "%20");
+            // track = track.replace(/ /g, "%20");
+            track = encodeURI(track)
             console.log(track);
             var trackUrl = "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&q_track=" + track + "&quorum_factor=1&apikey=" + setLyrics.APIkey;
             $.ajax({
@@ -58,7 +59,7 @@ var setLyrics = {
                         .then(function (response) {
                             var str = response.message.body.lyrics.lyrics_body;
                             str = str.substring(0, str.length - "******* This Lyrics is NOT for Commercial use ******* (1409617737497)".length)
-                            $("<h5>").text(track).appendTo(".lyrics");
+                            $("<h5>").text(decodeURI(track)).appendTo(".lyrics");
                             $("<p>").text(str).appendTo(".lyrics");
                         })
                 });
