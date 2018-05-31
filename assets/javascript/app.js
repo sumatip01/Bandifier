@@ -100,12 +100,17 @@ $("#spotifybutton").click(function() {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + _token);
             },
             success: function (data) {
-                // Do something with the returned data
                 console.log(data)
-                // data.items.map(function (artist) {
-                //     let item = $('<li>' + artist.name + '</li>');
-                //     item.appendTo($('#top-artists'));
-                // });
+                for (track in data.tracks){
+                    data.tracks[track].name
+                    data.tracks[track].uri
+                    var trackDiv = $("<div>");
+                    trackDiv.addClass("spotify-embed");
+                    var trackiFrame = $("<iframe>");
+                    trackiFrame.attr("src", "https://embed.spotify.com/?uri="+data.tracks[track].url);
+                    trackiFrame.appendTo(trackDiv);
+                    trackDiv.appendTo("#top-artists");
+                }
             }
         });
 });
@@ -144,21 +149,21 @@ $('#searchbutton').click(function () {
     });
 
 
-    $.ajax({
-        url: "https://api.spotify.com/v1/search?q=" + searchTerm + "&type=artist&limit=1",
-        type: "GET",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localToken);
-        },
-        success: function (data) {
-            // Do something with the returned data
-            console.log(data)
-            data.items.map(function (artist) {
-                let item = $('<li>' + artist.name + '</li>');
-                item.appendTo($('#top-artists'));
-            });
-        }
-    });
+    // $.ajax({
+    //     url: "https://api.spotify.com/v1/search?q=" + searchTerm + "&type=artist&limit=1",
+    //     type: "GET",
+    //     beforeSend: function (xhr) {
+    //         xhr.setRequestHeader('Authorization', 'Bearer ' + localToken);
+    //     },
+    //     success: function (data) {
+    //         // Do something with the returned data
+    //         console.log(data)
+    //         data.items.map(function (artist) {
+    //             let item = $('<li>' + artist.name + '</li>');
+    //             item.appendTo($('#top-artists'));
+    //         });
+    //     }
+    // });
 });
 
 function grabSections(pageID) {
