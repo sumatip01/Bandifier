@@ -9,7 +9,7 @@ if (!searchTerm){
     searchTerm="The Strokes";
 }
 
-searchItUp();
+// searchItUp();
 
 $("#btnMain").on("click", function (event){
     event.preventDefault();
@@ -18,6 +18,7 @@ $("#btnMain").on("click", function (event){
     $("#search-input").val("");
     location.href='bandspecific1.html';
     console.log(searchTerm);
+    searchItUp();
 
 
 })
