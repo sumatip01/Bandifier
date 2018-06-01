@@ -9,7 +9,7 @@ if (!searchTerm){
     searchTerm="The Strokes";
 }
 
-searchItUp();
+// searchItUp();
 
 $("#btnMain").on("click", function (event){
     event.preventDefault();
@@ -18,6 +18,7 @@ $("#btnMain").on("click", function (event){
     $("#search-input").val("");
     location.href='bandspecific1.html';
     console.log(searchTerm);
+    searchItUp();
 
 
 })
@@ -77,7 +78,7 @@ function searchItUp (){
 
         // Replace with your app's client ID, redirect URI and desired scopes
         const clientId = 'fe8362d03fae494c914dbed629a6f9f8';
-        const redirectUri = 'https://rudenik.github.io/Bandifier/bandspecific1.html';
+        const redirectUri = 'https://rudenik.github.io/Bandifier/index.html';
         const scopes = [
             // 'user-top-read'
         ];
@@ -132,7 +133,7 @@ function getTopTracks(artistID){
 
         // Replace with your app's client ID, redirect URI and desired scopes
         const clientId = 'fe8362d03fae494c914dbed629a6f9f8';
-        const redirectUri = 'https://rudenik.github.io/Bandifier/bandspecific1.html';
+        const redirectUri = 'https://rudenik.github.io/Bandifier/index.html';
         const scopes = [
             // 'user-top-read'
         ];
