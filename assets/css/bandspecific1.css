@@ -24,6 +24,19 @@ iframe {
     animation-duration: 5s;
 }
 
+.parent {
+    position: relative;
+}
+.searchAgain{
+position: absolute;
+right: 0;
+width: 20%;
+}
+
+img {
+    width: 100%;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -42,4 +55,9 @@ iframe {
     }
 }
 
+.collapsible li.active span {
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+  }
 /* } */
