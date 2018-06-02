@@ -15,11 +15,11 @@ var setLyrics = {
         }
     },
     setSpace: function () {
+        $(".youtube-container").css("position","relative");
         trackTitle=$("<h5>");
         trackTitle.appendTo(".lyrics");
         lyricsText=$("<p>");
         lyricsText.appendTo(".lyrics");
-        
         youtubeLink=$("<a>").attr({"target":"_blank","rel":"noreferrer noopener"});
         youtubePlay=$("<img>").attr("src","../Bandifier/assets/images/youtubePlay.png").css({"position":"absolute","height":"20%","width":"25%","left":"38%","top":"45%"});
         youtubeVideo=$("<img>").css("width","100%");
