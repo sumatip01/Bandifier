@@ -10,24 +10,39 @@ var setLyrics = {
         setLyrics.artist = sessionStorage.getItem("searchedTerm");
         setLyrics.artist = setLyrics.artist.replace(/ /g, "%20");
         }
+        else{
+            setLyrics.artist="justin timberlake";
+        }
+    },
+    setSpace: function () {
+        trackTitle=$("<h5>");
+        trackTitle.appendTo(".lyrics");
+        lyricsText=$("<p>");
+        lyricsText.appendTo(".lyrics");
+        
+        youtubeLink=$("<a>").attr({"target":"_blank","rel":"noreferrer noopener"});
+        youtubePlay=$("<img>").attr("src","../Bandifier/assets/images/youtubePlay.png").css({"position":"absolute","height":"20%","width":"25%","left":"38%","top":"45%"});
+        youtubeVideo=$("<img>").css("width","100%");
+        youtubeLink.appendTo(".youtube-container")
+        youtubeVideo.appendTo(youtubeLink);
     },
     getTracks: function () {
         $.ajax({
-            url: "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&page_size=100&q_artist=" + setLyrics.artist + "&apikey=" + setLyrics.APIkey,
+            url: "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&page_size=40&q_artist=" + setLyrics.artist + "&apikey=" + setLyrics.APIkey,
             dataType: "jsonp",
             method: "GET",
         })
             .then(function (response) {
                 var arr = response.message.body.track_list;
-                
-                
+                console.log(arr);
                 for (i = 0; i < arr.length; i++) {
-                    
+                    if(arr[i].track.has_lyrics!=0){
                     var s = $("<span>").addClass("track");
                     var t = $("<li>");
                     s.appendTo(t);
                     t.appendTo(".tracks-dropdown");
                     s.text(arr[i].track.track_name).appendTo(s);
+                    };
                 }
             })
     },
@@ -61,23 +76,24 @@ var setLyrics = {
                         .then(function (response) {
                             var str = response.message.body.lyrics.lyrics_body;
                             str = str.substring(0, str.length - "******* This Lyrics is NOT for Commercial use ******* (1409617737497)".length)
-                            $("<h5>").text(decodeURI(track)).appendTo(".lyrics");
-                            $("<p>").text(str).appendTo(".lyrics");
+                            trackTitle.text(decodeURI(track));
+                            lyricsText.text(str);
                         })
                 })
                 .then(function(){
-                    
                     var query=setLyrics.track;
                     var APIkey="AIzaSyB5lIeHvKSoj0JCXpVRpfwrz0WKP0vYhKc";
-                    queryURL="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&videoLicense=creativeCommon&q="+encodeURI(query+" "+setLyrics.artist)+"&type=music&key="+APIkey;
-                   
+                    queryURL="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&q="+encodeURI(query+" "+setLyrics.artist)+"&videoSyndicated=true&key="+APIkey;
+                    console.log(query+" "+setLyrics.artist);
                     $.ajax({
                         method:"GET",
                         url:queryURL,
                     }).then(function(response){
-                        console.log(response.items[0]);
-                        
-                        $("<iframe>").css({width:"100%", height:"110%"}).attr("frameborder",0).attr("allow","autoplay; encrypted-media").attr("src","https://www.youtube.com/embed/"+response.items[0].id.videoId).appendTo(".youtube-container");
+                        console.log(response);
+                        console.log(response.items[0].snippet.thumbnails.default.url);
+                        youtubeVideo.attr("src",response.items[0].snippet.thumbnails.default.url);
+                        youtubeLink.attr("href","https://www.youtube.com/watch?v="+response.items[0].id.videoId+"&feature=player_embedded");
+                        youtubePlay.appendTo(youtubeLink);
                     });
 
                 })
@@ -86,6 +102,7 @@ var setLyrics = {
 }
 
 //run function
+setLyrics.setSpace();
 setLyrics.getArtist();
 setLyrics.getTracks();
 setLyrics.getLyrics();

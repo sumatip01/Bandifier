@@ -1,14 +1,21 @@
-.menu-img{
-    height:30vh;
+body {
+    background-image: url("../images/bandLove.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.menu-items{
-    margin-top:20vh;
+.menu-img {
+    height: 30vh;
 }
 
-main{
-    margin-top:10vh;
+.menu-items {
+    margin-top: 20vh;
 }
-.features{
-    height:60vh;
+
+main {
+    margin-top: 10vh;
+}
+
+.features {
+    height: 60vh;
 }
