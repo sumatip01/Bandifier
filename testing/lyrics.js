@@ -19,8 +19,12 @@ var setLyrics = {
         trackTitle.appendTo(".lyrics");
         lyricsText=$("<p>");
         lyricsText.appendTo(".lyrics");
-        youtubeVideo=$("<iframe>").css({width:"100%", height:300}).attr("frameborder",0).attr("allow","autoplay; encrypted-media");
-        youtubeVideo.appendTo(".youtube-container");
+        
+        youtubeLink=$("<a>").attr({"target":"_blank","rel":"noreferrer noopener"});
+        youtubePlay=$("<img>").attr("src","../Bandifier/assets/images/youtubePlay.png").css({"position":"absolute","height":"20%","width":"25%","left":"38%","top":"45%"});
+        youtubeVideo=$("<img>").css("width","100%");
+        youtubeLink.appendTo(".youtube-container")
+        youtubeVideo.appendTo(youtubeLink);
     },
     getTracks: function () {
         $.ajax({
@@ -77,7 +81,6 @@ var setLyrics = {
                         })
                 })
                 .then(function(){
-                    
                     var query=setLyrics.track;
                     var APIkey="AIzaSyB5lIeHvKSoj0JCXpVRpfwrz0WKP0vYhKc";
                     queryURL="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&q="+encodeURI(query+" "+setLyrics.artist)+"&videoSyndicated=true&key="+APIkey;
@@ -87,11 +90,10 @@ var setLyrics = {
                         url:queryURL,
                     }).then(function(response){
                         console.log(response);
-                        console.log(response.items[0]);
-                        youtubeVideo.attr("src","https://www.youtube.com/embed/"+response.items[0].id.videoId);
-                        var openMusic=window.open("https://www.youtube.com/watch?v="+response.items[0].id.videoId+"&feature=player_embedded", "_blank","width=50,height=50");
-                        var autoClose=setTimeout(function(){openMusic.close()},120000);
-                       
+                        console.log(response.items[0].snippet.thumbnails.default.url);
+                        youtubeVideo.attr("src",response.items[0].snippet.thumbnails.default.url);
+                        youtubeLink.attr("href","https://www.youtube.com/watch?v="+response.items[0].id.videoId+"&feature=player_embedded");
+                        youtubePlay.appendTo(youtubeLink);
                     });
 
                 })
