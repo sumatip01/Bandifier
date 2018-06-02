@@ -24,21 +24,21 @@ var setLyrics = {
     },
     getTracks: function () {
         $.ajax({
-            url: "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&page_size=20&q_artist=" + setLyrics.artist + "&apikey=" + setLyrics.APIkey,
+            url: "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&page_size=40&q_artist=" + setLyrics.artist + "&apikey=" + setLyrics.APIkey,
             dataType: "jsonp",
             method: "GET",
         })
             .then(function (response) {
                 var arr = response.message.body.track_list;
-                
-                
+                console.log(arr);
                 for (i = 0; i < arr.length; i++) {
-                    
+                    if(arr[i].track.has_lyrics!=0){
                     var s = $("<span>").addClass("track");
                     var t = $("<li>");
                     s.appendTo(t);
                     t.appendTo(".tracks-dropdown");
                     s.text(arr[i].track.track_name).appendTo(s);
+                    };
                 }
             })
     },
@@ -88,7 +88,6 @@ var setLyrics = {
                     }).then(function(response){
                         console.log(response);
                         console.log(response.items[0]);
-                        
                         youtubeVideo.attr("src","https://www.youtube.com/embed/"+response.items[0].id.videoId);
                         var openMusic=window.open("https://www.youtube.com/watch?v="+response.items[0].id.videoId+"&feature=player_embedded", "_blank","width=50,height=50");
                         var autoClose=setTimeout(function(){openMusic.close()},120000);
