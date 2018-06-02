@@ -1,18 +1,23 @@
 body {
-    background-color: blueviolet;
+    background-image: url("../images/bandLove.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-#top-artists{
+
+#top-artists {
     width: 100%;
     padding: 50px;
 }
-.spotify-embed{
+
+.spotify-embed {
     background: #282828;
     /* &:not(:last-of-type){
         margin-bottom: 5px;
  */
-    height: 80px;    
+    height: 80px;
 }
-iframe{ 
+
+iframe {
     width: 100%;
     border-width: 0px;
     animation-name: fadeIn;
@@ -21,19 +26,20 @@ iframe{
 
 @keyframes fadeIn {
     0% {
-      opacity: 0;
+        opacity: 0;
     }
-    25%{
+    25% {
         opacity: .25;
     }
-    49%{
+    49% {
         opacity: .5;
     }
-    75%{
+    75% {
         opacity: .75;
     }
     100% {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-    /* } */
+}
+
+/* } */
