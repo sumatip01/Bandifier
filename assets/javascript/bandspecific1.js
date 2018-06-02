@@ -293,7 +293,6 @@ function buildCollapsible(sectionsArray) {
             var divHeader = $("<div class='collapsible-header'>");
             divHeader.html(sectionsArray[elements].line.replace(/<i>/gi, "").replace(/<\/i>/gi, ""));
             var headerBadge = $("<span class='badge material-icons '>expand_more</span>");
-            // headerBadge.text("+");
             headerBadge.appendTo(divHeader);
             var divBody = $("<div class='collapsible-body'>");
             divBody.attr("style", "background-color: white;");
