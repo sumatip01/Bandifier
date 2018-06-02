@@ -89,6 +89,7 @@ var setLyrics = {
         }
     },
     setSpace: function () {
+        $(".lyrics").empty();
         $(".tracks-dropdown").empty();
         $('.dropdown-trigger').dropdown();
         trackTitle=$("<h5>");
@@ -153,9 +154,14 @@ var setLyrics = {
                     })
                         .then(function (response) {
                             var str = response.message.body.lyrics.lyrics_body;
+                            if(str){
                             str = str.substring(0, str.length - "******* This Lyrics is NOT for Commercial use ******* (1409617737497)".length)
                             trackTitle.text(decodeURI(track));
                             lyricsText.text(str);
+                            }
+                            else{
+                                lyricsText.text("Protected by Copyright");
+                            }
                         })
                 })
                 .then(function(){
