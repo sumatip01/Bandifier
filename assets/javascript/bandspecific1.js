@@ -292,6 +292,9 @@ function buildCollapsible(sectionsArray) {
             var litem = $("<li>");
             var divHeader = $("<div class='collapsible-header'>");
             divHeader.html(sectionsArray[elements].line.replace(/<i>/gi, "").replace(/<\/i>/gi, ""));
+            var headerBadge = $("<span class='badge material-icons '>expand_more</span>");
+            // headerBadge.text("+");
+            headerBadge.appendTo(divHeader);
             var divBody = $("<div class='collapsible-body'>");
             divBody.attr("style", "background-color: white;");
             var bodySpan = $("<span>");
@@ -317,3 +320,7 @@ function buildCollapsible(sectionsArray) {
     var lements = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(lements);
 }
+$(".active").on("click", ".badge", function(event){
+    console.log("clicked badge");
+    this.text("-");
+});
