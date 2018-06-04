@@ -15,11 +15,11 @@ var setLyrics = {
         }
     },
     setSpace: function () {
+        $(".youtube-container").css("position","relative");
         trackTitle=$("<h5>");
         trackTitle.appendTo(".lyrics");
         lyricsText=$("<p>");
         lyricsText.appendTo(".lyrics");
-        
         youtubeLink=$("<a>").attr({"target":"_blank","rel":"noreferrer noopener"});
         youtubePlay=$("<img>").attr("src","../Bandifier/assets/images/youtubePlay.png").css({"position":"absolute","height":"20%","width":"25%","left":"38%","top":"45%"});
         youtubeVideo=$("<img>").css("width","100%");
@@ -75,9 +75,16 @@ var setLyrics = {
                     })
                         .then(function (response) {
                             var str = response.message.body.lyrics.lyrics_body;
+                            alert(str);
+                            if(str !=""){
                             str = str.substring(0, str.length - "******* This Lyrics is NOT for Commercial use ******* (1409617737497)".length)
                             trackTitle.text(decodeURI(track));
                             lyricsText.text(str);
+                            }
+                            else{
+                                alert("plau")
+                                lyricsText.text("Protected by Copyright");
+                            }
                         })
                 })
                 .then(function(){

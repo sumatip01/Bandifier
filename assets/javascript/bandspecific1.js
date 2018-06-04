@@ -3,11 +3,8 @@ var searchTerm = sessionStorage.getItem("searchedTerm");
 var localPageID;
 var localToken;
 var localSections;
-// var elems = document.querySelectorAll('.modal');
-// var instances = M.Modal.init(elems, onOpenStart(buildCollapsible()));//, options);
 
 $(".info-container").on("click", ".modal-trigger", function(event){
-    console.log("model-trigger");
     var elems = document.querySelectorAll('.modal');
     var options = {onOpenStart:buildCollapsible(localSections)};
     var instances = M.Modal.init(elems, options);
@@ -20,13 +17,11 @@ const clientID='fe8362d03fae494c914dbed629a6f9f8';
      window.onSpotifyWebPlaybackSDKReady = () => {
      window.addEventListener("message", receiveMessage, false);
      var authWindow = window.open(accountUrl, '_blank');
-    //  console.log(authWindow);
        if (authWindow) {
          authWindow.focus();
        }
 
        function receiveMessage(event){
-        //  console.log(event);
          var msg=event.data;
          if(typeof msg==='string'){
            var parseArray=msg.split('&');
@@ -49,24 +44,133 @@ if (!searchTerm){
     searchTerm="The Strokes";
 }
 
-// if (window.location.href.match('car-driving.html') != null) {
-// searchItUp();
-// }
-
 $("#btnMain").on("click", function (event){
     event.preventDefault();
     searchTerm = $("#search-input").val();
     sessionStorage.setItem("searchedTerm", searchTerm);
     $("#search-input").val("");
     location.href='bandspecific1.html';
-    // console.log('BUTTON MAIN CLICK');
     searchItUp();
-
-
+})
+$("#searchagain").on("submit", function(event){
+    event.preventDefault();
+    searchTerm = $("#search-input").val();
+    sessionStorage.setItem("searchedTerm", searchTerm);
+    $("#search-input").val("");
+    $(".youtube-container").empty();
+    $(".info-container").empty();
+    $(".spotify-container").empty();
+    searchItUp();
 })
 
-function searchItUp (){
+var setLyrics = {
+    trackID: "",
+    track:"",
+    APIkey: "003b119f7901034749c7fd78d8ea9bfc",
+    artist: sessionStorage.getItem("searchedTerm"),
+    getArtist: function () {
+        if(sessionStorage.getItem("searchedTerm")){
+        setLyrics.artist = sessionStorage.getItem("searchedTerm");
+        setLyrics.artist = setLyrics.artist.replace(/ /g, "%20");
+        }
+        else{
+            setLyrics.artist="justin timberlake";
+        }
+    },
+    setSpace: function () {
+        $(".lyrics").empty();
+        $(".tracks-dropdown").empty();
+        $('.dropdown-trigger').dropdown();
+        trackTitle=$("<h5>");
+        trackTitle.appendTo(".lyrics");
+        lyricsText=$("<p>");
+        lyricsText.appendTo(".lyrics");
+        youtubeLink=$("<a>").attr({"target":"_blank","rel":"noreferrer noopener"});
+        youtubePlay=$("<img>").attr("src","../Bandifier/assets/images/youtubePlay.png").css({"position":"absolute","height":"20%","width":"25%","left":"38%","top":"45%"});
+        youtubeVideo=$("<img>").css("width","100%");
+        youtubeLink.appendTo(".youtube-container")
+        youtubeVideo.appendTo(youtubeLink);
+    },
+    getTracks: function () {
+        $.ajax({
+            url: "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&page_size=40&q_artist=" + setLyrics.artist + "&apikey=" + setLyrics.APIkey,
+            dataType: "jsonp",
+            method: "GET",
+        })
+            .then(function (response) {
+                var arr = response.message.body.track_list;
+                for (i = 0; i < arr.length; i++) {
+                    if(arr[i].track.has_lyrics!=0){
+                    var s = $("<span>").addClass("track");
+                    var t = $("<li>");
+                    s.appendTo(t);
+                    t.appendTo(".tracks-dropdown");
+                    s.text(arr[i].track.track_name).appendTo(s);
+                    };
+                }
+            })
+    },
+    getLyrics: function () {
+        
+        $(".tracks-dropdown").on("click", "span", function () {
+            var track = $(this).text();
+            setLyrics.track=track;
+            track = encodeURI(track)
+            var trackUrl = "https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&q_track=" + track + "&quorum_factor=1&apikey=" + setLyrics.APIkey;
+            $.ajax({
+                url: trackUrl,
+                dataType: "jsonp",
+                method: "GET",
 
+            })
+                .then(function (response) {
+
+                    setLyrics.trackID = response.message.body.track_list[0].track.track_id;
+                })
+                .then(function () {
+                    url2 = "https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&callback=callback&track_id=" + setLyrics.trackID + "&apikey=" + setLyrics.APIkey;
+
+                    $.ajax({
+                        url: url2,
+                        method: "GET",
+                        dataType: "jsonp"
+                    })
+                        .then(function (response) {
+                            var str = response.message.body.lyrics.lyrics_body;
+                            if(str){
+                            str = str.substring(0, str.length - "******* This Lyrics is NOT for Commercial use ******* (1409617737497)".length)
+                            trackTitle.text(decodeURI(track));
+                            lyricsText.text(str);
+                            }
+                            else{
+                                lyricsText.text("Protected by Copyright");
+                            }
+                        })
+                })
+                .then(function(){
+                    var query=setLyrics.track;
+                    var APIkey="AIzaSyB5lIeHvKSoj0JCXpVRpfwrz0WKP0vYhKc";
+                    queryURL="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&q="+encodeURI(query+" "+setLyrics.artist)+"&videoSyndicated=true&key="+APIkey;
+                    $.ajax({
+                        method:"GET",
+                        url:queryURL,
+                    }).then(function(response){
+                        youtubeVideo.attr("src",response.items[0].snippet.thumbnails.default.url);
+                        youtubeLink.attr("href","https://www.youtube.com/watch?v="+response.items[0].id.videoId+"&feature=player_embedded");
+                        youtubePlay.appendTo(youtubeLink);
+                    });
+
+                })
+        });
+    }
+}
+
+
+function searchItUp (){
+    setLyrics.setSpace();
+    setLyrics.getArtist();
+    setLyrics.getTracks();
+    setLyrics.getLyrics();
     $.ajax({
         url: 'https://en.wikipedia.org/w/api.php',
         data: {
@@ -75,18 +179,14 @@ function searchItUp (){
             srsearch: searchTerm,
             format: 'json',
             generator: 'search',
-            //parameters for generator
             gsrsearch: searchTerm,
             gsrnamespace: 0,
             gsrlimit: 10,
             origin: "*",
             prop: 'extracts|pageimages',
-            //parameters for extracts
             exchars: 1200,
             exlimit: 'max',
             exintro: true,
-
-            //parameters for pageimages
             piprop: 'thumbnail',
             pilimit: 'max',
             pithumbsize: 200
@@ -96,38 +196,7 @@ function searchItUp (){
     }).then(function (resp) {
         
     });
-
-    // const hash = window.location.hash
-    // .substring(1)
-    // .split('&')
-    // .reduce(function (initial, item) {
-    //     if (item) {
-    //         var parts = item.split('=');
-    //         initial[parts[0]] = decodeURIComponent(parts[1]);
-    //     }
-    //     return initial;
-    //         }, {});
-    //     window.location.hash = '';
-
-    //     // Set token
-    //     let _token = hash.access_token;
-    //     localToken = _token;
-    //     const authEndpoint = 'https://accounts.spotify.com/authorize';
-
-    //     // Replace with your app's client ID, redirect URI and desired scopes
-    //     const clientId = 'fe8362d03fae494c914dbed629a6f9f8';
-    //     const redirectUri = 'https://rudenik.github.io/Bandifier/bandspecific1.html';
-    //     const scopes = [
-    //         // 'user-top-read'
-    //     ];
-
-    //     // If there is no token, redirect to Spotify authorization
-    //     if (!_token) {
-    //         window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token`;
-    //         localToken = _token;
-    //     }
         searchTerm = encodeURI(searchTerm);
-        console.log(searchTerm);
         $.ajax({
             url: "https://api.spotify.com/v1/search?q="+searchTerm+"&type=artist&market=CA",
             type: "GET",
@@ -147,7 +216,6 @@ function searchItUp (){
     }
     
 function getTopTracks(artistID){
-    
 $.ajax({
     url: "https://api.spotify.com/v1/artists/"+artistID+"/top-tracks?country=CA&limit=5",
     type: "GET",
@@ -158,14 +226,14 @@ $.ajax({
     success: function(response){
         console.log(response);
         if (response.tracks.length > 7){
-            for (i=0; i<10; i++){ //Here's where to specify how many tracks to put up
+            for (i=0; i<10; i++){ 
                 var sURI = "https://embed.spotify.com/?uri="+response.tracks[i].uri;
                     var trackDiv = $("<div>");
                     trackDiv.addClass("spotify-embed");
                     var trackiFrame = $("<iframe>");
                     trackiFrame.attr("src", sURI);
                     trackiFrame.appendTo(trackDiv);
-                    trackDiv.appendTo(".spotify-container");
+                    trackDiv.appendTo(".spotify-container");     
             }
         }else{
         for (track in response.tracks){
@@ -178,23 +246,20 @@ $.ajax({
                     trackDiv.appendTo(".spotify-container");
                 }
             }
+            
     }
-});
+}); 
 };
 
 function processResult(apiResult) {    
-    console.log(apiResult);
     localPageID = apiResult.query.search[0].title;
-    console.log(localPageID);
     grabSections(localPageID);
         try{
-        
         $('.info-container').html('<p>' + apiResult.query.pages[apiResult.query.search[0].pageid].extract + '</p>');
         $('.info-container').prepend('<img src='+apiResult.query.pages[apiResult.query.search[0].pageid].thumbnail.source+'>');
         $('#bandinfocard').text(decodeURI(searchTerm));
         var moreButton = $("<a class='waves-effect waves-light btn modal-trigger' href='#modal1'>More?</a>");
         moreButton.appendTo('.info-container');
-
     }catch(error){
         if (error instanceof TypeError){
         console.log(error);
@@ -208,18 +273,14 @@ function processResult(apiResult) {
                 srsearch: searchTerm,
                 format: 'json',
                 generator: 'search',
-                //parameters for generator
                 gsrsearch: searchTerm,
                 gsrnamespace: 0,
                 gsrlimit: 10,
                 origin: "*",
                 prop: 'extracts|pageimages',
-                //parameters for extracts
                 exchars: 1200,
                 exlimit: 'max',
                 exintro: true,
-    
-                //parameters for pageimages
                 piprop: 'thumbnail',
                 pilimit: 'max',
                 pithumbsize: 200
@@ -229,15 +290,11 @@ function processResult(apiResult) {
         }).then(function (resp) {
             console.log(resp);
         });
-
         }
-    
-    // $('#display-result').append('<p>' + apiResult.query.search[i].snippet + '</p>');
     }
 }
 
 function grabSections(pageID) {
-    // /w/api.php?action=parse&format=json&origin=*&page=The%20Strokes&redirects=1&prop=sections%7Cwikitext&wrapoutputclass=mw-parser-output&contentmodel=wikitext&utf8=1&formatversion=2
     $.ajax({
         url: 'https://en.wikipedia.org/w/api.php',
         data: {
@@ -260,13 +317,11 @@ function grabSections(pageID) {
             .replace(/\\t/g, "")
             .replace(/\\b/g, "")
             .replace(/\\f/g, "");
-        // buildCollapsible(gsresp.parse.sections);
         localSections=gsresp.parse.sections;
     })
 }
 
 function buildCollapsible(sectionsArray) {
-    // console.log(sectionsArray);
     var collapse = $("<ul class='collapsible' id='returnedsections'>");
     var promises = sectionsArray.map(function (section) {
         return new Promise(function (resolve) {
@@ -306,6 +361,7 @@ function buildCollapsible(sectionsArray) {
                 .replace(/\\t/g, "")
                 .replace(/\\b/g, "")
                 .replace(/\\f/g, "");
+            prettyString = prettyString.substring(1, prettyString.length-1);
             bodySpan.html(prettyString);
             bodySpan.appendTo(divBody);
             divHeader.appendTo(litem);
@@ -323,3 +379,10 @@ $(".active").on("click", ".badge", function(event){
     console.log("clicked badge");
     this.text("-");
 });
+
+
+
+
+
+
+
