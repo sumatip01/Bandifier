@@ -60,11 +60,16 @@ if (!searchTerm){
 
 $("#btnMain").on("click", function (event){
     event.preventDefault();
+    if (!$("#search-input").val()){
+        console.log("no Search term");
+        $("#badvalue").text("Please Enter a band or Artist");
+    }else{
     searchTerm = $("#search-input").val();
     sessionStorage.setItem("searchedTerm", searchTerm);
     $("#search-input").val("");
     location.href='bandspecific1.html';
     searchItUp();
+    }
 })
 $("#searchagain").on("submit", function(event){
     event.preventDefault();
@@ -219,8 +224,8 @@ function searchItUp (){
                 'Content-Type': 'application/json'
             },
             success: function (data) {
-                console.log(data)
-                console.log(data.artists.items[0].id);
+                // console.log(data)
+                // console.log(data.artists.items[0].id);
             
                 if (window.location.href.match('bandspecific1.html') != null) {
                 getTopTracks(data.artists.items[0].id);
@@ -238,7 +243,7 @@ $.ajax({
         'Content-Type': 'application/json'
     },
     success: function(response){
-        console.log(response);
+        // console.log(response);
         if (response.tracks.length > 7){
             for (i=0; i<10; i++){ 
                 var sURI = "https://embed.spotify.com/?uri="+response.tracks[i].uri;
@@ -276,7 +281,7 @@ function processResult(apiResult) {
         moreButton.appendTo('.info-container');
     }catch(error){
         if (error instanceof TypeError){
-        console.log(error);
+        // console.log(error);
         searchTerm = searchTerm+" band";
         searchTerm = encodeURI(searchTerm);
         $.ajax({
@@ -302,7 +307,7 @@ function processResult(apiResult) {
             dataType: 'jsonp',
             success: processResult
         }).then(function (resp) {
-            console.log(resp);
+            // console.log(resp);
         });
         }
     }
@@ -322,7 +327,7 @@ function grabSections(pageID) {
         },
         dataType: 'json'
     }).then(function (gsresp) {
-        console.log(gsresp);
+        // console.log(gsresp);
         var prettyString = JSON.stringify(gsresp.parse.text).replace(/\\n/g, "")
             .replace(/\\'/g, "")
             .replace(/\\"/g, '')
@@ -389,10 +394,7 @@ function buildCollapsible(sectionsArray) {
     var lements = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(lements);
 }
-$(".active").on("click", ".badge", function(event){
-    console.log("clicked badge");
-    this.text("-");
-});
+
 
 
 
