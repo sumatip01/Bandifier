@@ -3,6 +3,7 @@ var searchTerm = sessionStorage.getItem("searchedTerm");
 var localPageID;
 var localToken;
 var localSections;
+var typed;
 
 $(".info-container").on("click", ".modal-trigger", function(event){
     var elems = document.querySelectorAll('.modal');
@@ -10,6 +11,19 @@ $(".info-container").on("click", ".modal-trigger", function(event){
     var instances = M.Modal.init(elems, options);
 });
 
+setTimeout(function () {
+    var typedOptions = {strings:["Kings of Leon", "Portishead", "Post Malone", "Eminem", "Taylor Swift", "Washed Out", "Laura Marling", ""],
+    typeSpeed: 70,
+    backSpeed: 50
+}
+typed = new Typed(".typed", typedOptions);
+}, 6000);
+
+
+
+$("#search-input").on("click", function(){
+    typed.destroy();    
+})
 
 const clientID='fe8362d03fae494c914dbed629a6f9f8';
      let player,token;
