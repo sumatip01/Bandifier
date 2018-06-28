@@ -25,7 +25,7 @@ $("#search-input").on("click", function(){
     typed.destroy();    
 })
 
-const clientID='fe8362d03fae494c914dbed629a6f9f8';
+const clientID='YOURTOKENHERE';
      let player,token;
      var accountUrl='https://accounts.spotify.com/authorize?client_id='+clientID+'&redirect_uri=http:%2F%2Fwww.touchcatdigital.ca&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state%20streaming%20user-read-birthdate%20user-read-currently-playing&response_type=token&state=123';
      window.onSpotifyWebPlaybackSDKReady = () => {
