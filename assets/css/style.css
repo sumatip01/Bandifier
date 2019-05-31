@@ -1,0 +1,53 @@
+body {
+    background-image: url("../images/bandLove.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card-content {
+    margin-top: 40px;
+}
+
+#btnMain {
+    margin-top: 30px;
+}
+
+.logo {
+    font-family: 'Work Sans', sans-serif;
+    font-family: 'Indie Flower', cursive;
+    font-size: 40px;
+}
+.typed{
+    color: whitesmoke;
+}
+
+.descript {
+    font-size: 20px;
+}
+
+.pink-icon {
+    color: #ee6e73;
+    font-weight: 900;
+}
+#badvalue{
+    /* margin-top: 5px; */
+    padding-top: 15px;
+    /* display: inline; */
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.page-footer {
+    background-color: none;
+}
+
+.addMore {
+    margin: 30px;
+}

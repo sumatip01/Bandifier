@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Bandifier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js" defer></script>
+             
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/bandspecific1.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js" defer></script>
+    <!-- <script type="text/javascript" src="testing/SpotifyArtistTopSongsResp.json" defer></script> -->
+    <script src="assets/javascript/app.js" defer></script>
+    <!-- <script src="assets/javascript/spotify-web-api.js" defer></script> -->
+    <link rel="icon" type="image/png" href="assets/images/magnifying-favicon.png" sizes="16x16 32x32" />
+</head>
+<body>
+    <div class ="row">
+        <div class="col s6">
+    <div class="input-field" >
+    <input class="form-control" id="search-input" type="text" placeholder="What band do you want to look up? " style="background-color: white; width: 40%; margin: 20px">
+    <button id="searchbutton" class="btn waves-effect waves-light" name="action" type="submit">Search</button>
+    <div class ="row">
+            <div class="col s6">
+        <div class="input-field" >
+        <input class="form-control" id="spotify-input" type="text" placeholder="What band do you want to look up? " style="background-color: white; width: 40%; margin: 20px">
+        <button id="spotifybutton" class="btn waves-effect waves-light" name="action" type="submit">Search Spotify</button>
+</div>
+</div>
+</div>
+<div class="container">
+    <div id="display-result"></div>
+    <div id="artistsections" ></div>
+    <div id="returnedtext"></div>
+    <div id="top-artists">
+            <!-- <div class="spotify-embed"><iframe src="https://embed.spotify.com/?uri=spotify:track:2MLHyLy5z5l5YRp7momlgw" width="340" height="80" frameborder="0" allowtransparency="true"></iframe></div> -->
+    </div>
+</div>
+</body>
